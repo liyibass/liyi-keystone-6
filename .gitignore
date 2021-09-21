@@ -1,0 +1,10 @@
+node_modules
+.idea
+dist/
+gcskeyfile.json
+.DS_Store
+scratch_file/
+*~
+.env
+.keystone
+keystone.db
