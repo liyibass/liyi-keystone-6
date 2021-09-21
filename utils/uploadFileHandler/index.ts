@@ -1,20 +1,34 @@
-function uploadFileHandler(resolvedData, existingItem, operation) {
+import Image from './Image'
+
+function uploadFileHandler(
+    resolvedData,
+    existingItem,
+    operation: string,
+    fileType: string
+) {
     // console.log(operation)
     // console.log(resolvedData)
     // console.log(existingItem)
 
     const operationStatus = getOperationStatus()
-    if (operation === 'no update' || operation === 'create list but no file')
+    if (
+        operationStatus === 'no update' ||
+        operationStatus === 'create list but no file'
+    )
         return
 
     // has file which is waiting for uploaded
-    const isNeedWatermark =
-        resolvedData.needWatermark ||
-        (existingItem?.needWatermark &&
-            resolvedData.needWatermark === undefined)
-    if (isNeedWatermark) {
-        console.log('start watermark process')
-    }
+    if (fileType === 'image') {
+        const { id, extension, width, height } = resolvedData.file
+
+        var image = new Image(id, extension, width, height)
+
+        const isNeedWatermark = ifWatermarkIsNeeded()
+
+        if (isNeedWatermark) {
+            image.addWatermark()
+        }
+    } else return
 
     // handle file uploading
     switch (operationStatus) {
@@ -26,6 +40,14 @@ function uploadFileHandler(resolvedData, existingItem, operation) {
             break
     }
     return 'upload file success'
+
+    function ifWatermarkIsNeeded() {
+        return (
+            resolvedData.needWatermark ||
+            (existingItem?.needWatermark &&
+                resolvedData.needWatermark === undefined)
+        )
+    }
 
     function getOperationStatus() {
         switch (operation) {

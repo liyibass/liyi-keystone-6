@@ -29,7 +29,7 @@ const listConfigurations = list({
     },
     hooks: {
         beforeChange: ({ resolvedData, existingItem, operation }) => {
-            uploadFileHandler(resolvedData, existingItem, operation)
+            uploadFileHandler(resolvedData, existingItem, operation, 'image')
         },
         beforeDelete: ({ existingItem, operation }) => {
             deleteFileHandler(existingItem)
