@@ -1,6 +1,6 @@
 import Image from './Image'
 
-function uploadFileHandler(
+async function uploadFileHandler(
     resolvedData,
     existingItem,
     operation: string,
@@ -24,10 +24,13 @@ function uploadFileHandler(
         var image = new Image(id, extension, width, height)
 
         const isNeedWatermark = ifWatermarkIsNeeded()
-
         if (isNeedWatermark) {
-            image.addWatermark()
+            await image.addWatermark()
         }
+
+        await image.compressImage()
+        await image.uploadFirstImage()
+        image.resizeAndUploadRestSizeImages()
     } else return
 
     // handle file uploading
@@ -39,6 +42,8 @@ function uploadFileHandler(
             console.log('update file')
             break
     }
+    console.log('upload image succeed')
+
     return 'upload file success'
 
     function ifWatermarkIsNeeded() {
