@@ -33,11 +33,20 @@ const listConfigurations = list({
             links: true,
             dividers: true,
         }),
-        newDateTime: NewDatetime({
-            label: 'NewDateTime',
-            hasNowButton: false, // default to false
-            hasTimePicker: true, // default to true
-            isReadOnly: false, // default to false
+        newDateTime1: NewDatetime({
+            label: 'NewDateTime:default',
+        }),
+        newDateTime2: NewDatetime({
+            label: 'NewDateTime:Now Button',
+            hasNowButton: true, // default to false
+        }),
+        newDateTime3: NewDatetime({
+            label: 'NewDateTime:No time',
+            hasTimePicker: false, // default to true
+        }),
+        newDateTime4: NewDatetime({
+            label: 'NewDateTime: read only',
+            hasNowButton: true, // default to false
         }),
     },
 })

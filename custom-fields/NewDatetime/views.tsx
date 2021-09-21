@@ -12,7 +12,7 @@ import {
     FieldControllerConfig,
     FieldProps,
 } from '@keystone-next/types'
-import { NewDatetime } from './newDateTime'
+import NewDatetime from './NewDatetimeComponent/NewDatetime.module'
 
 // this is the component shown in the create modal and item page
 export const Field = ({
@@ -21,8 +21,7 @@ export const Field = ({
     onChange,
     autoFocus,
 }: FieldProps<typeof controller>) => {
-    console.log(field)
-    const { label, hasNowButton } = field
+    const { label, hasNowButton, isReadOnly, hasTimePicker } = field
     return (
         <FieldContainer as="fieldset">
             <FieldLabel as="legend">{label}</FieldLabel>
@@ -31,6 +30,8 @@ export const Field = ({
                 value={value}
                 autoFocus={autoFocus}
                 hasNowButton={hasNowButton}
+                isReadOnly={isReadOnly}
+                hasTimePicker={hasTimePicker}
             />
         </FieldContainer>
     )
@@ -63,10 +64,20 @@ export const CardValue: CardValueComponent = ({ item, field }) => {
 export const controller = (
     // the type parameter here needs to align with what is returned from `getAdminMeta`
     // in the server-side portion of the field type
-    config: FieldControllerConfig<{ hasNowButton: boolean }>
-): FieldController<string | undefined, string> & { hasNowButton: boolean } => {
+    config: FieldControllerConfig<{
+        hasNowButton: boolean
+        isReadOnly: boolean
+        hasTimePicker: boolean
+    }>
+): FieldController<string | undefined, string> & {
+    hasNowButton: boolean
+    isReadOnly: boolean
+    hasTimePicker: boolean
+} => {
     return {
         hasNowButton: config.fieldMeta.hasNowButton,
+        isReadOnly: config.fieldMeta.isReadOnly,
+        hasTimePicker: config.fieldMeta.hasTimePicker,
         path: config.path,
         label: config.label,
         graphqlSelection: config.path,

@@ -27,6 +27,21 @@ type Mutation {
   updatePosts(data: [PostUpdateArgs!]!): [Post]
   deletePost(where: PostWhereUniqueInput!): Post
   deletePosts(where: [PostWhereUniqueInput!]!): [Post]
+  createCustomFieldList(data: CustomFieldListCreateInput!): CustomFieldList
+  createCustomFieldLists(
+    data: [CustomFieldListCreateInput!]!
+  ): [CustomFieldList]
+  updateCustomFieldList(
+    where: CustomFieldListWhereUniqueInput!
+    data: CustomFieldListUpdateInput!
+  ): CustomFieldList
+  updateCustomFieldLists(data: [CustomFieldListUpdateArgs!]!): [CustomFieldList]
+  deleteCustomFieldList(
+    where: CustomFieldListWhereUniqueInput!
+  ): CustomFieldList
+  deleteCustomFieldLists(
+    where: [CustomFieldListWhereUniqueInput!]!
+  ): [CustomFieldList]
   endSession: Boolean!
 }
 
@@ -183,7 +198,7 @@ type Post {
   title: String
   status: String
   content: Post_content_DocumentField
-  publishDate: String
+  newDateTime: String
   createdAt: String
   updatedAt: String
   createdBy: User
@@ -213,7 +228,7 @@ input PostUpdateInput {
   title: String
   status: String
   content: JSON
-  publishDate: String
+  newDateTime: String
   createdAt: String
   updatedAt: String
   createdBy: UserRelateToOneForUpdateInput
@@ -229,7 +244,74 @@ input PostCreateInput {
   title: String
   status: String
   content: JSON
-  publishDate: String
+  newDateTime: String
+  createdAt: String
+  updatedAt: String
+  createdBy: UserRelateToOneForCreateInput
+  updatedBy: UserRelateToOneForCreateInput
+}
+
+type CustomFieldList {
+  id: ID!
+  title: String
+  status: String
+  content: CustomFieldList_content_DocumentField
+  newDateTime1: String
+  newDateTime2: String
+  newDateTime3: String
+  newDateTime4: String
+  createdAt: String
+  updatedAt: String
+  createdBy: User
+  updatedBy: User
+}
+
+type CustomFieldList_content_DocumentField {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input CustomFieldListWhereUniqueInput {
+  id: ID
+}
+
+input CustomFieldListWhereInput {
+  AND: [CustomFieldListWhereInput!]
+  OR: [CustomFieldListWhereInput!]
+  NOT: [CustomFieldListWhereInput!]
+  id: IDFilter
+}
+
+input CustomFieldListOrderByInput {
+  id: OrderDirection
+}
+
+input CustomFieldListUpdateInput {
+  title: String
+  status: String
+  content: JSON
+  newDateTime1: String
+  newDateTime2: String
+  newDateTime3: String
+  newDateTime4: String
+  createdAt: String
+  updatedAt: String
+  createdBy: UserRelateToOneForUpdateInput
+  updatedBy: UserRelateToOneForUpdateInput
+}
+
+input CustomFieldListUpdateArgs {
+  where: CustomFieldListWhereUniqueInput!
+  data: CustomFieldListUpdateInput!
+}
+
+input CustomFieldListCreateInput {
+  title: String
+  status: String
+  content: JSON
+  newDateTime1: String
+  newDateTime2: String
+  newDateTime3: String
+  newDateTime4: String
   createdAt: String
   updatedAt: String
   createdBy: UserRelateToOneForCreateInput
@@ -262,6 +344,14 @@ type Query {
   ): [Post!]
   post(where: PostWhereUniqueInput!): Post
   postsCount(where: PostWhereInput! = {}): Int
+  customFieldLists(
+    where: CustomFieldListWhereInput! = {}
+    orderBy: [CustomFieldListOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [CustomFieldList!]
+  customFieldList(where: CustomFieldListWhereUniqueInput!): CustomFieldList
+  customFieldListsCount(where: CustomFieldListWhereInput! = {}): Int
   keystone: KeystoneMeta!
 }
 

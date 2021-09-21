@@ -4,10 +4,9 @@ import {
     fieldType,
     FieldTypeFunc,
     CommonFieldConfig,
-    legacyFilters,
     orderDirectionEnum,
-    schema,
-} from '@keystone-next/types'
+    graphql,
+} from '@keystone-next/keystone/types'
 
 // this field is based on the integer field
 // but with validation to ensure the value is within an expected range
@@ -53,7 +52,7 @@ export const NewDatetime =
             // all of these inputs are optional if they don't make sense for a particular field type
             input: {
                 create: {
-                    arg: schema.arg({ type: schema.String }),
+                    arg: graphql.arg({ type: graphql.String }),
                     // this field type doesn't need to do anything special
                     // but field types can specify resolvers for inputs like they can for their output GraphQL field
                     // this function can be omitted, it is here purely to show how you could change it
@@ -74,12 +73,12 @@ export const NewDatetime =
                         return val
                     },
                 },
-                update: { arg: schema.arg({ type: schema.String }) },
-                orderBy: { arg: schema.arg({ type: orderDirectionEnum }) },
+                update: { arg: graphql.arg({ type: graphql.String }) },
+                orderBy: { arg: graphql.arg({ type: orderDirectionEnum }) },
             },
             // this
-            output: schema.field({
-                type: schema.String,
+            output: graphql.field({
+                type: graphql.String,
                 // like the input resolvers, providing the resolver is unnecessary if you're just returning the value
                 // it is shown here to show what you could do
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -91,35 +90,7 @@ export const NewDatetime =
             getAdminMeta() {
                 return { hasNowButton, isReadOnly, hasTimePicker }
             },
-            __legacy: {
-                filters: {
-                    fields: {
-                        ...legacyFilters.fields.equalityInputFields(
-                            meta.fieldKey,
-                            schema.Int
-                        ),
-                        ...legacyFilters.fields.orderingInputFields(
-                            meta.fieldKey,
-                            schema.Int
-                        ),
-                        ...legacyFilters.fields.inInputFields(
-                            meta.fieldKey,
-                            schema.Int
-                        ),
-                    },
-                    impls: {
-                        ...legacyFilters.impls.equalityConditions(
-                            meta.fieldKey
-                        ),
-                        ...legacyFilters.impls.orderingConditions(
-                            meta.fieldKey
-                        ),
-                        ...legacyFilters.impls.inConditions(meta.fieldKey),
-                    },
-                },
-                isRequired,
-                defaultValue,
-            },
+            __legacy: { isRequired, defaultValue },
         })
 
 function getIndexType({

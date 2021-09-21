@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Datetime from 'react-datetime'
 import DatePicker from 'react-datepicker'
 import styled from '@emotion/styled'
 import './DateFormat'
@@ -918,6 +917,8 @@ export default function NewDatetime(props) {
     // get current unix timestamp
     const nowHandler = (e) => {
         e.preventDefault()
+        if (isReadOnly) return
+
         const nowDate = new Date(Date.now())
 
         setInputField(nowDate)
