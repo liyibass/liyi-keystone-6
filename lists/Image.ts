@@ -4,6 +4,7 @@ import {
     relationship,
     timestamp,
     select,
+    file,
 } from '@keystone-next/keystone/fields'
 import { document } from '@keystone-next/fields-document'
 import { addTrackingFields } from '../utils/trackingHandler'
@@ -15,6 +16,7 @@ const listConfigurations = list({
             label: '標題',
             isRequired: true,
         }),
+        file: file({}),
     },
 })
 

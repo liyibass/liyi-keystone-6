@@ -1,10 +1,19 @@
 import { config } from '@keystone-next/keystone'
 import { statelessSessions } from '@keystone-next/keystone/session'
 
-import { lists } from './schema'
 import { withAuth, sessionSecret } from './auth'
-import { sessionSetting, database } from './configs/config'
-let { sessionMaxAge } = sessionSetting
+import { sessionSetting } from './configs/config'
+const { sessionMaxAge }: { sessionMaxAge: number } = sessionSetting
+
+import { lists } from './schema'
+import {
+    db,
+    ui,
+    server,
+    graphql,
+    extendGraphqlSchema,
+    files,
+} from './systemConfiguration'
 
 const session = statelessSessions({
     maxAge: sessionMaxAge,
@@ -12,18 +21,19 @@ const session = statelessSessions({
 })
 
 export default withAuth(
+    /*
+     * System Configuration API
+     * representing all the configurable parts of the system
+     * https://keystonejs.com/docs/apis/config#images
+     */
     config({
-        db: {
-            provider: database.provider || 'postgresql',
-            url:
-                database.url ||
-                'postgres://keystone:mirror-tv@localhost/israfel',
-            idField: { kind: 'autoincrement' },
-        },
-        ui: {
-            isAccessAllowed: (context) => !!context.session?.data,
-        },
         lists,
+        db,
+        ui,
+        server,
         session,
+        graphql,
+        extendGraphqlSchema,
+        files,
     })
 )

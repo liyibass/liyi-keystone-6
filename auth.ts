@@ -1,6 +1,6 @@
 import { createAuth } from '@keystone-next/auth'
 import { sessionSetting } from './configs/config'
-let { sessionSecret } = sessionSetting
+let { sessionSecret }: { sessionSecret: string } = sessionSetting
 
 if (!sessionSecret) {
     if (process.env.NODE_ENV === 'production') {
