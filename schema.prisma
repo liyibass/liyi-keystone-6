@@ -55,14 +55,21 @@ model Post {
 }
 
 model Image {
-  id          Int     @id @default(autoincrement())
-  name        String?
-  createdAt   String?
-  updatedAt   String?
-  createdBy   User?   @relation("Image_createdBy", fields: [createdById], references: [id])
-  createdById Int?    @map("createdBy")
-  updatedBy   User?   @relation("Image_updatedBy", fields: [updatedById], references: [id])
-  updatedById Int?    @map("updatedBy")
+  id             Int      @id @default(autoincrement())
+  name           String?
+  file_filesize  Int?
+  file_extension String?
+  file_width     Int?
+  file_height    Int?
+  file_mode      String?
+  file_id        String?
+  needWatermark  Boolean?
+  createdAt      String?
+  updatedAt      String?
+  createdBy      User?    @relation("Image_createdBy", fields: [createdById], references: [id])
+  createdById    Int?     @map("createdBy")
+  updatedBy      User?    @relation("Image_updatedBy", fields: [updatedById], references: [id])
+  updatedById    Int?     @map("updatedBy")
 
   @@index([createdById])
   @@index([updatedById])

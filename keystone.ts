@@ -13,6 +13,7 @@ import {
     graphql,
     extendGraphqlSchema,
     files,
+    images,
 } from './systemConfiguration'
 
 const session = statelessSessions({
@@ -35,5 +36,6 @@ export default withAuth(
         graphql,
         extendGraphqlSchema,
         files,
+        images,
     })
 )

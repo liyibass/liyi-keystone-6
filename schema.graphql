@@ -260,14 +260,43 @@ input PostCreateInput {
 type Image {
   id: ID!
   name: String
+  file: ImageFieldOutput
+  needWatermark: Boolean
   createdAt: String
   updatedAt: String
   createdBy: User
   updatedBy: User
 }
 
+interface ImageFieldOutput {
+  id: ID!
+  filesize: Int!
+  width: Int!
+  height: Int!
+  extension: ImageExtension!
+  ref: String!
+  src: String!
+}
+
+enum ImageExtension {
+  jpg
+  png
+  webp
+  gif
+}
+
 input ImageWhereUniqueInput {
   id: ID
+}
+
+type LocalImageFieldOutput implements ImageFieldOutput {
+  id: ID!
+  filesize: Int!
+  width: Int!
+  height: Int!
+  extension: ImageExtension!
+  ref: String!
+  src: String!
 }
 
 input ImageWhereInput {
@@ -283,11 +312,23 @@ input ImageOrderByInput {
 
 input ImageUpdateInput {
   name: String
+  file: ImageFieldInput
+  needWatermark: Boolean
   createdAt: String
   updatedAt: String
   createdBy: UserRelateToOneForUpdateInput
   updatedBy: UserRelateToOneForUpdateInput
 }
+
+input ImageFieldInput {
+  upload: Upload
+  ref: String
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
 
 input ImageUpdateArgs {
   where: ImageWhereUniqueInput!
@@ -296,6 +337,8 @@ input ImageUpdateArgs {
 
 input ImageCreateInput {
   name: String
+  file: ImageFieldInput
+  needWatermark: Boolean
   createdAt: String
   updatedAt: String
   createdBy: UserRelateToOneForCreateInput
