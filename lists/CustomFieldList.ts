@@ -7,7 +7,7 @@ import {
 } from '@keystone-next/keystone/fields'
 import { document } from '@keystone-next/fields-document'
 import { addTrackingFields } from '../utils/trackingHandler'
-import { NewDatetime } from '../customFields'
+import { NewDatetime } from '../custom-fields'
 
 const listConfigurations = list({
     fields: {
@@ -46,7 +46,7 @@ const listConfigurations = list({
         }),
         newDateTime4: NewDatetime({
             label: 'NewDateTime: read only',
-            hasNowButton: true, // default to false
+            isReadOnly: true, // default to false
         }),
     },
 })

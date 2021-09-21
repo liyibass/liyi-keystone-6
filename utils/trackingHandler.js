@@ -1,4 +1,5 @@
-import { relationship, timestamp } from '@keystone-next/keystone/fields'
+import { relationship } from '@keystone-next/keystone/fields'
+import { NewDatetime } from '../custom-fields'
 
 /**
 add additional fields and hooks into existed list.
@@ -23,19 +24,19 @@ export function addTrackingFields(list) {
     }
 
     // add additional fields
-    list.fields.createdAt = timestamp({
+    list.fields.createdAt = NewDatetime({
         label: '建立時間',
         ui: {
             createView: { fieldMode: 'hidden' },
-            itemView: { fieldMode: 'read' },
         },
+        isReadOnly: true,
     })
-    list.fields.updatedAt = timestamp({
+    list.fields.updatedAt = NewDatetime({
         label: '更新時間',
         ui: {
             createView: { fieldMode: 'hidden' },
-            itemView: { fieldMode: 'read' },
         },
+        isReadOnly: true,
     })
     list.fields.createdBy = relationship({
         label: '建立者',

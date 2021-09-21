@@ -18,8 +18,8 @@ model User {
   password                       String?
   role                           String?
   lastLogin                      DateTime?
-  createdAt                      DateTime?
-  updatedAt                      DateTime?
+  createdAt                      String?
+  updatedAt                      String?
   createdBy                      User?             @relation("User_createdBy", fields: [createdById], references: [id])
   createdById                    Int?              @map("createdBy")
   updatedBy                      User?             @relation("User_updatedBy", fields: [updatedById], references: [id])
@@ -28,6 +28,8 @@ model User {
   from_User_updatedBy            User[]            @relation("User_updatedBy")
   from_Post_createdBy            Post[]            @relation("Post_createdBy")
   from_Post_updatedBy            Post[]            @relation("Post_updatedBy")
+  from_Image_createdBy           Image[]           @relation("Image_createdBy")
+  from_Image_updatedBy           Image[]           @relation("Image_updatedBy")
   from_CustomFieldList_createdBy CustomFieldList[] @relation("CustomFieldList_createdBy")
   from_CustomFieldList_updatedBy CustomFieldList[] @relation("CustomFieldList_updatedBy")
 
@@ -36,24 +38,38 @@ model User {
 }
 
 model Post {
-  id          Int       @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   title       String?
   status      String?
   content     String?
   newDateTime String?
-  createdAt   DateTime?
-  updatedAt   DateTime?
-  createdBy   User?     @relation("Post_createdBy", fields: [createdById], references: [id])
-  createdById Int?      @map("createdBy")
-  updatedBy   User?     @relation("Post_updatedBy", fields: [updatedById], references: [id])
-  updatedById Int?      @map("updatedBy")
+  createdAt   String?
+  updatedAt   String?
+  createdBy   User?   @relation("Post_createdBy", fields: [createdById], references: [id])
+  createdById Int?    @map("createdBy")
+  updatedBy   User?   @relation("Post_updatedBy", fields: [updatedById], references: [id])
+  updatedById Int?    @map("updatedBy")
+
+  @@index([createdById])
+  @@index([updatedById])
+}
+
+model Image {
+  id          Int     @id @default(autoincrement())
+  name        String?
+  createdAt   String?
+  updatedAt   String?
+  createdBy   User?   @relation("Image_createdBy", fields: [createdById], references: [id])
+  createdById Int?    @map("createdBy")
+  updatedBy   User?   @relation("Image_updatedBy", fields: [updatedById], references: [id])
+  updatedById Int?    @map("updatedBy")
 
   @@index([createdById])
   @@index([updatedById])
 }
 
 model CustomFieldList {
-  id           Int       @id @default(autoincrement())
+  id           Int     @id @default(autoincrement())
   title        String?
   status       String?
   content      String?
@@ -61,12 +77,12 @@ model CustomFieldList {
   newDateTime2 String?
   newDateTime3 String?
   newDateTime4 String?
-  createdAt    DateTime?
-  updatedAt    DateTime?
-  createdBy    User?     @relation("CustomFieldList_createdBy", fields: [createdById], references: [id])
-  createdById  Int?      @map("createdBy")
-  updatedBy    User?     @relation("CustomFieldList_updatedBy", fields: [updatedById], references: [id])
-  updatedById  Int?      @map("updatedBy")
+  createdAt    String?
+  updatedAt    String?
+  createdBy    User?   @relation("CustomFieldList_createdBy", fields: [createdById], references: [id])
+  createdById  Int?    @map("createdBy")
+  updatedBy    User?   @relation("CustomFieldList_updatedBy", fields: [updatedById], references: [id])
+  updatedById  Int?    @map("updatedBy")
 
   @@index([createdById])
   @@index([updatedById])

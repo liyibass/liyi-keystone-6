@@ -7,7 +7,7 @@ import {
 } from '@keystone-next/keystone/fields'
 import { document } from '@keystone-next/fields-document'
 import { addTrackingFields } from '../utils/trackingHandler'
-import { NewDatetime } from '../customFields'
+import { NewDatetime } from '../custom-fields'
 
 const listConfigurations = list({
     fields: {

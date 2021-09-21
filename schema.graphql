@@ -27,6 +27,12 @@ type Mutation {
   updatePosts(data: [PostUpdateArgs!]!): [Post]
   deletePost(where: PostWhereUniqueInput!): Post
   deletePosts(where: [PostWhereUniqueInput!]!): [Post]
+  createImage(data: ImageCreateInput!): Image
+  createImages(data: [ImageCreateInput!]!): [Image]
+  updateImage(where: ImageWhereUniqueInput!, data: ImageUpdateInput!): Image
+  updateImages(data: [ImageUpdateArgs!]!): [Image]
+  deleteImage(where: ImageWhereUniqueInput!): Image
+  deleteImages(where: [ImageWhereUniqueInput!]!): [Image]
   createCustomFieldList(data: CustomFieldListCreateInput!): CustomFieldList
   createCustomFieldLists(
     data: [CustomFieldListCreateInput!]!
@@ -251,6 +257,51 @@ input PostCreateInput {
   updatedBy: UserRelateToOneForCreateInput
 }
 
+type Image {
+  id: ID!
+  name: String
+  createdAt: String
+  updatedAt: String
+  createdBy: User
+  updatedBy: User
+}
+
+input ImageWhereUniqueInput {
+  id: ID
+}
+
+input ImageWhereInput {
+  AND: [ImageWhereInput!]
+  OR: [ImageWhereInput!]
+  NOT: [ImageWhereInput!]
+  id: IDFilter
+}
+
+input ImageOrderByInput {
+  id: OrderDirection
+}
+
+input ImageUpdateInput {
+  name: String
+  createdAt: String
+  updatedAt: String
+  createdBy: UserRelateToOneForUpdateInput
+  updatedBy: UserRelateToOneForUpdateInput
+}
+
+input ImageUpdateArgs {
+  where: ImageWhereUniqueInput!
+  data: ImageUpdateInput!
+}
+
+input ImageCreateInput {
+  name: String
+  createdAt: String
+  updatedAt: String
+  createdBy: UserRelateToOneForCreateInput
+  updatedBy: UserRelateToOneForCreateInput
+}
+
 type CustomFieldList {
   id: ID!
   title: String
@@ -344,6 +395,14 @@ type Query {
   ): [Post!]
   post(where: PostWhereUniqueInput!): Post
   postsCount(where: PostWhereInput! = {}): Int
+  images(
+    where: ImageWhereInput! = {}
+    orderBy: [ImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Image!]
+  image(where: ImageWhereUniqueInput!): Image
+  imagesCount(where: ImageWhereInput! = {}): Int
   customFieldLists(
     where: CustomFieldListWhereInput! = {}
     orderBy: [CustomFieldListOrderByInput!]! = []

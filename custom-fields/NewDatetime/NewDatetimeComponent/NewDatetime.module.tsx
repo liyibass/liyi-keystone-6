@@ -902,10 +902,13 @@ export default function NewDatetime(props) {
         isReadOnly,
         hasTimePicker,
     } = props
-
-    let newValue: Date | undefined
+    let newValue: Date | undefined | Number
     if (value) {
-        newValue = new Date(value)
+        if (value?.search('T') === -1) {
+            newValue = new Date(parseInt(value))
+        } else {
+            newValue = new Date(value)
+        }
     }
 
     const [inputField, setInputField] = useState(newValue)
@@ -930,7 +933,7 @@ export default function NewDatetime(props) {
     }
 
     return (
-        <NewDatetimeWrapper>
+        <NewDatetimeWrapper style={{ opacity: isReadOnly ? 0.6 : 1 }}>
             <DatePicker
                 selected={inputField}
                 onChange={(date) => changeHandler(date)}
